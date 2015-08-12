@@ -1,6 +1,7 @@
 package br.com.fabricadeprogramador.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,4 +43,23 @@ public class EstadoController extends HttpServlet {
 		resp.getWriter().print("Salvo");
 	}
 
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String acao = req.getParameter("acao");
+		EstadoDAO estadoDAO = new EstadoDAO();
+		
+		if (acao == null || acao.equals("lis")) {
+			List<Estado> lista = estadoDAO.buscarTodos();
+			resp.getWriter().print(lista);
+		} else if (acao.equals("esc")){
+			// Pegando o id da tela
+			String id = req.getParameter("id");
+			Estado est = new Estado();
+			est.setId(Integer.parseInt(id));
+			estadoDAO.salvar(est);
+			// Mensagem
+			resp.getWriter().print("Salvo!");
+		}
+	}
 }

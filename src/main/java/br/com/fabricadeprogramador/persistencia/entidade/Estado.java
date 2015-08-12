@@ -24,6 +24,9 @@ public class Estado {
 		UF = uF;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return nome;
+	}
 
 }

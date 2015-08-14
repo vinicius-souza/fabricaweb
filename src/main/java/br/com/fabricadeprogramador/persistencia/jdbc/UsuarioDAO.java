@@ -127,6 +127,7 @@ public class UsuarioDAO {
 		String sql = "select * from usuario where id = ?";
 		
 		try (PreparedStatement preparador = con.prepareStatement(sql)) {
+			//substitui o "?" no SQL pela variavel indicada
 			preparador.setInt(1, id);
 			
 			ResultSet resultado = preparador.executeQuery();

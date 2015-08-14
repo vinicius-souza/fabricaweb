@@ -3,6 +3,7 @@ package br.com.fabricadeprogramador.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +17,8 @@ import br.com.fabricadeprogramador.persistencia.jdbc.UsuarioDAO;
 public class UsuarioController extends HttpServlet {
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 
 		String nome = req.getParameter("nome");
 		String login = req.getParameter("login");
@@ -40,17 +42,26 @@ public class UsuarioController extends HttpServlet {
 		// Resposta
 		resp.getWriter().print("Usuario Salvo!");
 	}
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String acao = req.getParameter("acao");
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
-		
+
 		if (acao == null || acao.equals("lis")) {
 			List<Usuario> lista = usuarioDAO.buscarTodos();
-			resp.getWriter().print(lista);
-		} else if (acao.equals("esc")){
+			
+			// Adicionando atributo no request
+			req.setAttribute("listaUsu", lista);
+			// Objeto de encaminhamento
+			RequestDispatcher dispatcher = req
+					.getRequestDispatcher("WEB-INF/listausu.jsp");
+			// Encaminhando o request e o respose para o JSP
+			dispatcher.forward(req, resp);
+
+			// resp.getWriter().print(lista);
+		} else if (acao.equals("esc")) {
 			// Pegando o id da tela
 			String id = req.getParameter("id");
 			Usuario usu = new Usuario();

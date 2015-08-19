@@ -27,7 +27,7 @@ public class UsuarioController extends HttpServlet {
 
 		// Instanciando o objeto usuario
 		Usuario usuario = new Usuario();
-		if (id != null && id != "") {
+		if (id != null && id != "0") {
 			usuario.setId(Integer.parseInt(id));
 		}
 
@@ -37,6 +37,7 @@ public class UsuarioController extends HttpServlet {
 
 		// Persistindo no banco
 		UsuarioDAO usuarioDao = new UsuarioDAO();
+		// Cadastra ou Altera
 		usuarioDao.salvar(usuario);
 
 		// Resposta
@@ -69,7 +70,29 @@ public class UsuarioController extends HttpServlet {
 			usuarioDAO.excluir(usu);
 			// Mensagem
 			resp.getWriter().print("Excluido!");
+		} else if (acao.equals("alt")){
+			
+			String id = req.getParameter("id");
+			Usuario usuario = usuarioDAO.buscarPorId(Integer.parseInt(id));
+			req.setAttribute("usu", usuario);
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/formusuario.jsp");
+			dispatcher.forward(req, resp);
+			
+		} else if (acao.equals("cad")){
+			
+			String id = req.getParameter("id");
+			
+			Usuario usuario = new Usuario();
+			usuario.setId(0);
+			usuario.setNome("");
+			usuario.setLogin("");
+			usuario.setSenha("");
+			
+			req.setAttribute("usu", usuario);
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/formusuario.jsp");
+			dispatcher.forward(req, resp);
 		}
+		
 	}
 
 }

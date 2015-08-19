@@ -35,7 +35,7 @@ public class UsuarioDAO {
 			preparador.setString(3, usuario.getSenha());
 			// Executando no banco
 			preparador.execute();
-			preparador.close();
+			//preparador.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -56,7 +56,7 @@ public class UsuarioDAO {
 
 			// Executando no banco
 			preparador.execute();
-			preparador.close();
+			//preparador.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();

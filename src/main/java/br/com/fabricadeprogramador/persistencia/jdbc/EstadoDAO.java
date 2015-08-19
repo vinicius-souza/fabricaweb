@@ -95,4 +95,32 @@ public class EstadoDAO {
 		return lista;
 	}
 
+	public Estado buscarPorId(Integer id) {
+		
+		Estado estado = null;
+		String sql = "select * from estado where id = ?";
+		
+		try (PreparedStatement preparador = con.prepareStatement(sql)) {
+			//substitui o "?" no SQL pela variavel indicada
+			preparador.setInt(1, id);
+			
+			ResultSet resultado = preparador.executeQuery();
+			
+			if (resultado.next()) {
+
+				estado = new Estado();
+				estado.setId(resultado.getInt("id"));
+				estado.setNome(resultado.getString("nome"));
+				estado.setUF(resultado.getString("uf"));
+				
+			}
+			
+			System.out.println("Encontrado com Sucesso!");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return estado;
+	}
+
 }

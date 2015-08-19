@@ -29,8 +29,8 @@ public class EstadoController extends HttpServlet {
 
 		// Instanciando usuario e setando dados
 		Estado est = new Estado();
-		if(id != null){
-			//Convertendo ID para Inteiro
+		if (id != null || id != "0") {
+			// Convertendo ID para Inteiro
 			est.setId(Integer.parseInt(id));
 		}
 		est.setNome(nome);
@@ -49,21 +49,22 @@ public class EstadoController extends HttpServlet {
 			throws ServletException, IOException {
 		String acao = req.getParameter("acao");
 		EstadoDAO estadoDAO = new EstadoDAO();
-		
+
 		if (acao == null || acao.equals("lis")) {
 			List<Estado> lista = estadoDAO.buscarTodos();
-			
-			//Setar atributo do request
+
+			// Setar atributo do request
 			req.setAttribute("listaest", lista);
-			
-			//Cria dispatcher pra encaminhar ao JSP
-			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/listaest.jsp");
-			
-			//Encaminha ao JSP
+
+			// Cria dispatcher pra encaminhar ao JSP
+			RequestDispatcher dispatcher = req
+					.getRequestDispatcher("WEB-INF/listaest.jsp");
+
+			// Encaminha ao JSP
 			dispatcher.forward(req, resp);
-			
-			//resp.getWriter().print(lista);
-		} else if (acao.equals("esc")){
+
+			// resp.getWriter().print(lista);
+		} else if (acao.equals("esc")) {
 			// Pegando o id da tela
 			String id = req.getParameter("id");
 			Estado est = new Estado();
@@ -71,6 +72,28 @@ public class EstadoController extends HttpServlet {
 			estadoDAO.salvar(est);
 			// Mensagem
 			resp.getWriter().print("Salvo!");
+		} else if (acao.equals("alt")) {
+
+			String id = req.getParameter("id");
+			Estado estado = estadoDAO.buscarPorId(Integer.parseInt(id));
+			req.setAttribute("est", estado);
+			RequestDispatcher dispatcher = req
+					.getRequestDispatcher("/WEB-INF/formestado.jsp");
+			dispatcher.forward(req, resp);
+
+		} else if (acao.equals("cad")) {
+			String id = req.getParameter("id");
+
+			Estado estado = new Estado();
+			estado.setId(0);
+			estado.setNome("");
+			estado.setUF("");
+			
+			req.setAttribute("est", estado);
+			RequestDispatcher dispatcher = req
+					.getRequestDispatcher("/WEB-INF/formusuario.jsp");
+			dispatcher.forward(req, resp);
 		}
+
 	}
 }

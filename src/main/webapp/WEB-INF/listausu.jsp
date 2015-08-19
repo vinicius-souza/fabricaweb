@@ -14,6 +14,7 @@
 	<tr>
 		<th> ID </th>
 		<th> NOME </th>
+		<th> &nbsp; </th>
 	</tr>
 	
 <%
@@ -21,7 +22,14 @@
 List<Usuario> lista = (List<Usuario>)request.getAttribute("listaUsu");
 //Gerando linhas na tabela para imprimir os dados
 for (Usuario u:lista){
-	out.print("<tr>  <td> "+ u.getId() + " </td> <td> "+ u.getNome() + "</td></tr>");
+	%>
+	<tr>  
+		<td><%=u.getId()%>  </td> 
+		<td><%= u.getNome() %></td> 
+		<td> <a href="usucontroller.do?acao=alt&id=<%=u.getId()%>">Editar</a> </td>   
+	</tr>
+
+<%
 }
 %>
 

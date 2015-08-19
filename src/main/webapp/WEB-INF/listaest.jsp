@@ -15,6 +15,7 @@
 		<tr>
 			<th>ID</th>
 			<th>NOME</th>
+			<th> &nbsp; </th>
 		</tr>
 	
 	
@@ -22,10 +23,18 @@
 //Acessando a Lista de Estados
 List<Estado> lista = (List<Estado>)request.getAttribute("listaest");
 
-for (Estado e: lista){
-	out.print("<tr>  <td> "+ e.getId() + " </td> <td> "+ e.getNome() + "</td></tr>");
+for (Estado e:lista){
+	%>
+	<tr>  
+		<td><%=e.getId()%>  </td> 
+		<td><%= e.getNome() %></td> 
+		<td> <a href="estadocontroller.do?acao=alt&id=<%=e.getId()%>">Editar</a> </td>   
+	</tr>
+
+<%
 }
-%>	
+%>
+
 
 </table>
 </body>

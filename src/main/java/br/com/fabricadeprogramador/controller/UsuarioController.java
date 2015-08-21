@@ -62,14 +62,14 @@ public class UsuarioController extends HttpServlet {
 			dispatcher.forward(req, resp);
 
 			// resp.getWriter().print(lista);
-		} else if (acao.equals("esc")) {
+		} else if (acao.equals("exc")) {
 			// Pegando o id da tela
 			String id = req.getParameter("id");
 			Usuario usu = new Usuario();
 			usu.setId(Integer.parseInt(id));
 			usuarioDAO.excluir(usu);
 			// Mensagem
-			resp.getWriter().print("Excluido!");
+			resp.sendRedirect("usucontroller.do?acao=lis");
 		} else if (acao.equals("alt")){
 			
 			String id = req.getParameter("id");

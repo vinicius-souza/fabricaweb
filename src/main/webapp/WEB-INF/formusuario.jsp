@@ -20,6 +20,7 @@
 
 </head>
 <body>
+<%@ include file="menu.jsp" %>
 <% 
 	Usuario usu = (Usuario)request.getAttribute("usu");
 %>
